@@ -12,10 +12,10 @@ export class SCORMViewer {
 
     @Element() private element: HTMLElement;
 
-    @Event() LMSSetValue: EventEmitter;
-    @Event() LMSCommit: EventEmitter;
-    @Event() LMSInitialize: EventEmitter;
-    @Event() LMSFinish: EventEmitter;
+    @Event() lmsSetValue: EventEmitter;
+    @Event() lmsCommit: EventEmitter;
+    @Event() lmsInitialize: EventEmitter;
+    @Event() lmsFinish: EventEmitter;
 
     private scormWindow: CourseWindow;
 
@@ -35,15 +35,15 @@ export class SCORMViewer {
         }
         this.scormWindow.API = {
             LMSInitialize: () => {
-                this.LMSInitialize.emit();
+                this.lmsInitialize.emit();
                 return "true";
             },
             LMSCommit: () => {
-                this.LMSCommit.emit();
+                this.lmsCommit.emit();
                 return "true";
             },
             LMSFinish: () => {
-                this.LMSFinish.emit();
+                this.lmsFinish.emit();
                 return "true";
             },
             LMSGetValue: (model) => {
@@ -52,7 +52,7 @@ export class SCORMViewer {
             },
             LMSSetValue: (model, value) => {
                 this.courseData[model] = value;
-                this.LMSSetValue.emit({
+                this.lmsSetValue.emit({
                     model,
                     value
                 });

@@ -13,10 +13,10 @@ The SCORM course __must__ be served on the same origin (host:port) as the consum
 ### Events
 |Event|Description|
 :---:|:---:
-|`LMSSetValue`|Emitted when the course captures form data. Locally tracks data to `courseData` object.|
-|`LMSCommit`|Emitted when a value is committed.|
-|`LMSInitialize`|Emitted when the course initializes against the LMS.|
-|`LMSFinish`|Emitted when the course finishes.|
+|`lmsSetValue`|Emitted when the course captures form data. Locally tracks data to `courseData` object.|
+|`lmsCommit`|Emitted when a value is committed.|
+|`lmsInitialize`|Emitted when the course initializes against the LMS.|
+|`lmsFinish`|Emitted when the course finishes.|
 
 ## Contributors
 
