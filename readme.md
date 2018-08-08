@@ -28,10 +28,11 @@ import '@teammaestro/stencil-scorm-viewer/dist/scormviewer';
 ### Events
 |Event|Description|
 :---:|:---:
-|`lmsSetValue`|Emitted when the course captures form data. Locally tracks data to `courseData` object.|
-|`lmsCommit`|Emitted when a value is committed.|
-|`lmsInitialize`|Emitted when the course initializes against the LMS.|
-|`lmsFinish`|Emitted when the course finishes.|
+|`onSetValue`|Emitted when the course captures form data. Locally tracks data to `courseData` object.|
+|`onCommit`|Emitted when a value is committed to the API.|
+|`onInitiailize`|Emitted when the course initializes against the LMS.|
+|`onFinish`|Emitted when the course finishes.|
+|`onTerminate`|Emitted when the course is terminated.|
 
 ---
 

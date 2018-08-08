@@ -41,51 +41,58 @@ describe('scorm-viewer', () => {
             expect((window as any).API).toBeDefined();
         });
 
-        let API: API;
         let comp: SCORMViewer;
 
         beforeEach(() => {
             comp = new SCORMViewer();
-            API = (window as any).API;
         });
 
-        it('should emit lmsInitialize event when LMSInitialize is called', () => {
+        it('should emit onInitialize event when initialize is called', () => {
             const changedSpy = jest.fn();
-            comp.lmsInitialize = {
+            comp.onInitialize = {
                 emit: changedSpy
             };
-            comp.LMSInitialize();
+            comp.initialize();
             expect(changedSpy).toHaveBeenCalled();
         });
 
-        it('should emit lmsCommit event when LMSCommit is called', () => {
+        it('should emit onCommit event when commit is called', () => {
             const changedSpy = jest.fn();
-            comp.lmsCommit = {
+            comp.onCommit = {
                 emit: changedSpy
             };
-            comp.LMSCommit();
+            comp.commit();
             expect(changedSpy).toHaveBeenCalled();
         });
 
-        it('should emit lmsFinish event when LMSFinish is called', () => {
+        it('should emit onFinish event when finish is called', () => {
             const changedSpy = jest.fn();
-            comp.lmsFinish = {
+            comp.onFinish = {
                 emit: changedSpy
             };
-            comp.LMSFinish();
+            comp.finish();
             expect(changedSpy).toHaveBeenCalled();
         });
 
-        it('should emit lmsSetValue event when LMSSetValue is called', () => {
+        it('should emit onSetValue event when setValue is called', () => {
             const changedSpy = jest.fn();
-            comp.lmsSetValue = {
+            comp.onSetValue = {
                 emit: changedSpy
             };
-            comp.LMSSetValue('prop', true);
+            comp.setValue('prop', true);
             expect(changedSpy).toHaveBeenCalled();
             expect(comp.courseData).toBeDefined();
             expect(comp.courseData['prop']).toEqual(true);
         });
+
+        describe('2004 3rd Edition', () => {
+
+            it('should have API_1484_11', async () => {
+                comp.componentDidLoad();
+                await testWindow.flush();
+                expect(comp.scormWindow.API_1484_11).toBeDefined();
+            });
+        })
 
     })
 });

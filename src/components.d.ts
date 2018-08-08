@@ -54,10 +54,11 @@ declare global {
   namespace JSXElements {
     export interface HiveScormViewerAttributes extends HTMLAttributes {
       'onError'?: (event: CustomEvent<any>) => void;
-      'onLmsCommit'?: (event: CustomEvent<any>) => void;
-      'onLmsFinish'?: (event: CustomEvent<any>) => void;
-      'onLmsInitialize'?: (event: CustomEvent<any>) => void;
-      'onLmsSetValue'?: (event: CustomEvent<{model: any, value: any}>) => void;
+      'onOnCommit'?: (event: CustomEvent<any>) => void;
+      'onOnFinish'?: (event: CustomEvent<any>) => void;
+      'onOnInitialize'?: (event: CustomEvent<any>) => void;
+      'onOnSetValue'?: (event: CustomEvent<{ element: any, value: any }>) => void;
+      'onOnTerminate'?: (event: CustomEvent<any>) => void;
       'src'?: string;
     }
   }
