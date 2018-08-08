@@ -1,7 +1,7 @@
 import { Config } from '@stencil/core';
 
 export const config: Config = {
-    namespace: 'scorm-viewer',
+    namespace: 'scormviewer',
     outputTargets: [
         {
             type: 'dist'

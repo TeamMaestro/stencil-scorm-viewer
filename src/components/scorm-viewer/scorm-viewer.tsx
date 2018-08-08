@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { CourseWindow } from '../interfaces';
 
 @Component({
@@ -10,64 +10,107 @@ export class SCORMViewer {
 
     courseData = {};
 
-    @Element() private element: HTMLElement;
+    @Event() lmsSetValue: EventEmitter<{model: any, value: any}>;
+    @Event() lmsCommit: EventEmitter<any>;
+    @Event() lmsInitialize: EventEmitter<any>;
+    @Event() lmsFinish: EventEmitter<any>;
 
-    @Event() lmsSetValue: EventEmitter;
-    @Event() lmsCommit: EventEmitter;
-    @Event() lmsInitialize: EventEmitter;
-    @Event() lmsFinish: EventEmitter;
+    // Generic error event for if anything fails when attaching to the window object
+    @Event() error: EventEmitter<any>;
 
-    private scormWindow: CourseWindow;
+    scormWindow: CourseWindow;
 
     @Prop({ mutable: true }) src: string;
 
-    componentDidLoad() {
-        const frame = this.element.shadowRoot.querySelector('iframe');
-        // Need to attach the API events prior to the frame loading
-        this._attachEvents(frame);
+    constructor() {
+        this.LMSInitialize = this.LMSInitialize.bind(this);
+        this.LMSCommit = this.LMSCommit.bind(this);
+        this.LMSFinish = this.LMSFinish.bind(this);
+        this.LMSGetValue = this.LMSGetValue.bind(this);
+        this.LMSSetValue = this.LMSSetValue.bind(this);
+        this.LMSGetLastError = this.LMSGetLastError.bind(this);
+        this.LMSGetErrorString = this.LMSGetErrorString.bind(this);
+        this.LMSGetDiagnostic = this.LMSGetDiagnostic.bind(this);
     }
 
-    private _attachEvents(frame: HTMLIFrameElement) {
-        this.scormWindow = frame.contentWindow || frame as any;
+    componentDidLoad() {
+        this._attachEvents();
+
+    }
+
+    private _attachEvents() {
+        this.scormWindow = this.topmostWindow as CourseWindow;
         // If the window already has an API binding - skip
         if (this.scormWindow.API) {
             return;
         }
-        this.scormWindow.API = {
-            LMSInitialize: () => {
-                this.lmsInitialize.emit();
-                return "true";
-            },
-            LMSCommit: () => {
-                this.lmsCommit.emit();
-                return "true";
-            },
-            LMSFinish: () => {
-                this.lmsFinish.emit();
-                return "true";
-            },
-            LMSGetValue: (model) => {
-                // TODO allow binding a function to return the value from the consuming app
-                return this.courseData[model] as string || '';
-            },
-            LMSSetValue: (model, value) => {
-                this.courseData[model] = value;
-                this.lmsSetValue.emit({
-                    model,
-                    value
-                });
-                return "true";
-            },
-            LMSGetLastError: function () {
-                return "0";
-            },
-            LMSGetErrorString: (errorCode: string) => {
-                return errorCode || "No error";
-            },
-            LMSGetDiagnostic: (errorCode: string) => {
-                return errorCode || "No error";
-            }
-        };
+        try {
+            this.scormWindow.API = {
+                LMSInitialize: this.LMSInitialize,
+                LMSCommit: this.LMSCommit,
+                LMSFinish: this.LMSFinish,
+                LMSGetValue: this.LMSGetValue,
+                LMSSetValue: this.LMSSetValue,
+                LMSGetLastError: this.LMSGetLastError,
+                LMSGetErrorString: this.LMSGetErrorString,
+                LMSGetDiagnostic: this.LMSGetDiagnostic
+            };
+        } catch (error) {
+            this.error.emit(error);
+        }
+    }
+
+    LMSInitialize() {
+        this.lmsInitialize.emit();
+        return "true";
+    }
+
+    LMSCommit() {
+        this.lmsCommit.emit();
+        return "true";
+    }
+
+    LMSFinish() {
+        this.lmsFinish.emit();
+        return "true";
+    }
+
+    LMSGetValue(model) {
+        // TODO allow binding a function to return the value from the consuming app
+        return this.courseData[model] as string || '';
+    }
+
+    LMSSetValue(model, value) {
+        this.courseData[model] = value;
+        this.lmsSetValue.emit({
+            model,
+            value
+        });
+        return "true";
+    }
+
+    LMSGetLastError() {
+        return "0";
+    }
+
+    LMSGetErrorString(errorCode: string) {
+        return errorCode || "No Error";
+    }
+
+    LMSGetDiagnostic(errorCode: string) {
+        return errorCode || "No Error";
+    }
+
+    /**
+     * SCORM only cares about the topmost window frame for checking for important information.
+     * Recursively climb the window tree to find the best window to attach to.
+     */
+    get topmostWindow(): Window {
+        let tempWindow = window;
+        while(tempWindow.parent !== null && tempWindow.parent !== tempWindow) {
+            tempWindow = tempWindow.parent;
+        }
+        return tempWindow;
     }
 
     render() {

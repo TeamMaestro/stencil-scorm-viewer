@@ -9,6 +9,21 @@ The SCORM course __must__ be served on the same origin (host:port) as the consum
 ## Usage
 - `<hive-scorm-viewer src="http://www.mydomain/index.html"></hive-scorm-viewer>`
 
+### Angular (6+) / Ionic (4+)
+In your `angular.json` file add the following assets matcher in your `projects.app.architect.build.options.assets` collection:
+```
+{
+    "glob": "**/*",
+    "input": "node_modules/@teammaestro/stencil-scorm-viewer/dist/scormviewer",
+    "output": "./scormviewer"
+}
+```
+
+In your main `AppModule` (i.e. `app.module.ts`) add the following import statement:
+
+```
+import '@teammaestro/stencil-scorm-viewer/dist/scormviewer';
+```
 
 ### Events
 |Event|Description|
@@ -17,6 +32,25 @@ The SCORM course __must__ be served on the same origin (host:port) as the consum
 |`lmsCommit`|Emitted when a value is committed.|
 |`lmsInitialize`|Emitted when the course initializes against the LMS.|
 |`lmsFinish`|Emitted when the course finishes.|
+
+---
+
+## Development
+
+### Local Development
+
+- `npm i`
+- `npm run start`
+
+_Note_: You will need to drop SCORM assets into `www/` to test in the browser.
+
+### Building the Stencil Component
+
+- `npm run build`
+- `npm publish` or `npm pack` for local deployments
+
+### Testing
+- `npm run test`
 
 ## Contributors
 
