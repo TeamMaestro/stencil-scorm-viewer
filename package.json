@@ -1,6 +1,6 @@
 {
-  "name": "@teammaestro/stencil-scorm-viewer",
-  "version": "0.0.1",
+  "name": "@teamhive/stencil-scorm-viewer",
+  "version": "1.0.0",
   "description": "Stencil component for viewing SCORM e-learning courses offline.",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
@@ -23,14 +23,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TeamMaestro/stencil-scorm-viewer.git"
+    "url": "git+https://github.com/TeamHive/stencil-scorm-viewer.git"
   },
   "author": "Ionic Team",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TeamMaestro/stencil-scorm-viewer"
+    "url": "https://github.com/TeamHive/stencil-scorm-viewer"
   },
-  "homepage": "https://github.com/TeamMaestro/stencil-scorm-viewer",
+  "homepage": "https://github.com/TeamHive/stencil-scorm-viewer",
   "jest": {
     "transform": {
       "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"

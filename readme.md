@@ -4,7 +4,7 @@ Web component that allows you to render SCORM (e-learning) courses in your web (
 The SCORM course __must__ be served on the same origin (host:port) as the consuming application to avoid cross-frame injection.
 
 ## Installation
-- `npm install @teammaestro/stencil-scorm-viewer`
+- `npm install @teamhive/stencil-scorm-viewer`
 
 ## Usage
 - `<hive-scorm-viewer src="http://www.mydomain/index.html"></hive-scorm-viewer>`
@@ -14,7 +14,7 @@ In your `angular.json` file add the following assets matcher in your `projects.a
 ```
 {
     "glob": "**/*",
-    "input": "node_modules/@teammaestro/stencil-scorm-viewer/dist/scormviewer",
+    "input": "node_modules/@teamhive/stencil-scorm-viewer/dist/scormviewer",
     "output": "./scormviewer"
 }
 ```
@@ -22,7 +22,7 @@ In your `angular.json` file add the following assets matcher in your `projects.a
 In your main `AppModule` (i.e. `app.module.ts`) add the following import statement:
 
 ```
-import '@teammaestro/stencil-scorm-viewer/dist/scormviewer';
+import '@teamhive/stencil-scorm-viewer/dist/scormviewer';
 ```
 
 ### Events
